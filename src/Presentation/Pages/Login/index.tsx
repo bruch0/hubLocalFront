@@ -1,8 +1,12 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-import LoginContext from "@Contexts/Login";
+import UserContext from "@Contexts/User";
 
 import FormBuilder from "@Components/FormBuilder";
+
+import { login } from "@Service/api";
 
 import CoverImage from "@Assets/Cover.png";
 import LogoImage from "@Assets/Logo.png";
@@ -21,13 +25,14 @@ import {
 } from "./styles";
 
 const LoginPage = () => {
-  const { email } = useContext(LoginContext);
+  const context = useContext(UserContext);
+  const navigate = useNavigate();
 
   const formInputs = [
     {
       name: "email",
       label: "Email",
-      defaultValue: email,
+      defaultValue: context.email,
       patern: /[a-zA-Z0-9]+@+[a-zA-Z0-9]+\.+[a-zA-Z0-9]/,
       errorMessage: "Insira um email válido",
       required: true,
@@ -37,9 +42,7 @@ const LoginPage = () => {
     {
       name: "password",
       label: "Senha",
-      patern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/,
-      errorMessage:
-        "Sua senha deve conter oito caracteres, uma letra maiúscula, uma letra minúscula e um dígito",
+      errorMessage: "Insira sua senha",
       required: true,
       disabled: false,
       type: "password",
@@ -68,7 +71,14 @@ const LoginPage = () => {
           formData={{
             inputs: formInputs,
             submitButton: "Logar",
-            onSubmit: (d: any) => console.log(d),
+            onSubmit: (data: { email: string; password: string }) =>
+              login(data)
+                .then(({ data }) => {
+                  toast.success("Logado com sucesso");
+                  context.name = data.content.name;
+                  navigate("/companies");
+                })
+                .catch(({ response }) => toast.error(response.data.message)),
           }}
         />{" "}
         <GoToRegister to="/register">Criar conta</GoToRegister>

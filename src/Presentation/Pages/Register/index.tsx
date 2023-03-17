@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import LoginContext from "@Contexts/Login";
+import UserContext from "@Contexts/User";
 
 import FormBuilder from "@Components/FormBuilder";
 
@@ -25,7 +25,7 @@ import {
 } from "./styles";
 
 const RegisterPage = () => {
-  const context = useContext(LoginContext);
+  const context = useContext(UserContext);
   const navigate = useNavigate();
 
   const formInputs = [
