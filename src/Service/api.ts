@@ -10,4 +10,7 @@ const createAccount = (data: {
   password: string;
 }) => axiosApiConnection.post(`${baseURL}/users/register`, data);
 
-export { createAccount };
+const login = (data: { email: string; password: string }) =>
+  axiosApiConnection.post(`${baseURL}/users/login`, data);
+
+export { createAccount, login };
