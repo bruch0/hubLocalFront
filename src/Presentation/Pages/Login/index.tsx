@@ -1,3 +1,7 @@
+import { useContext } from "react";
+
+import LoginContext from "@Contexts/Login";
+
 import FormBuilder from "@Components/FormBuilder";
 
 import CoverImage from "@Assets/Cover.png";
@@ -17,10 +21,13 @@ import {
 } from "./styles";
 
 const LoginPage = () => {
+  const { email } = useContext(LoginContext);
+
   const formInputs = [
     {
       name: "email",
       label: "Email",
+      defaultValue: email,
       patern: /[a-zA-Z0-9]+@+[a-zA-Z0-9]+\.+[a-zA-Z0-9]/,
       errorMessage: "Insira um email válido",
       required: true,
