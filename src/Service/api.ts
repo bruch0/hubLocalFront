@@ -4,4 +4,10 @@ const axiosApiConnection = new AxiosApiConnection();
 const baseURL =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:4000";
 
-export {};
+const createAccount = (data: {
+  name: string;
+  email: string;
+  password: string;
+}) => axiosApiConnection.post(`${baseURL}/users/register`, data);
+
+export { createAccount };
