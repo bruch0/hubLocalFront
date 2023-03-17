@@ -24,9 +24,9 @@
       "@Frameworks/*": ["src/Frameworks/*"],
       "@Interfaces": ["src/Interfaces/index"],
       "@Components/*": ["src/Presentation/Components/*"],
-      "@Contexts/*": ["src/Contexts/*"],
-      "@Pages/*": ["src/Pages/*"],
-      "@Router": ["src/Router/index"]
+      "@Contexts/*": ["src/Presentation/Contexts/*"],
+      "@Pages/*": ["src/Presentation/Pages/*"],
+      "@Router": ["src/Presentation/Router/index"]
     }
   },
   "include": ["src"]
