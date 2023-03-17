@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "types": ["node", "vite/client"],
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -22,7 +23,7 @@
       "@Core/*": ["src/Core/*"],
       "@Frameworks/*": ["src/Frameworks/*"],
       "@Interfaces": ["src/Interfaces/index"],
-      "@Components/*": ["src/Components/*"],
+      "@Components/*": ["src/Presentation/Components/*"],
       "@Contexts/*": ["src/Contexts/*"],
       "@Pages/*": ["src/Pages/*"],
       "@Router": ["src/Router/index"]
