@@ -26,7 +26,8 @@
       "@Components/*": ["src/Presentation/Components/*"],
       "@Contexts/*": ["src/Presentation/Contexts/*"],
       "@Pages/*": ["src/Presentation/Pages/*"],
-      "@Router": ["src/Presentation/Router/index"]
+      "@Router": ["src/Presentation/Router/index"],
+      "@Service/*": ["src/Service/*"]
     }
   },
   "include": ["src"]
