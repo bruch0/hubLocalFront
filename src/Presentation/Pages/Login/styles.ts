@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const PageHolder = styled.main`
@@ -61,6 +62,25 @@ const LoginPageFormHolder = styled.div`
 
 const Logo = styled.img``;
 
+const GoToRegister = styled(Link)`
+  width: 100%;
+  height: 70px;
+  color: white;
+  background-color: #00cc99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+
+  :last-of-type {
+    margin-top: 20px;
+  }
+`;
+
 export {
   PageHolder,
   LoginPageDisclaimerHolder,
@@ -71,4 +91,5 @@ export {
   DisclaimerContent,
   LoginPageFormHolder,
   Logo,
+  GoToRegister,
 };

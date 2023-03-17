@@ -34,7 +34,7 @@ const Input = styled.input`
 const Submit = styled.input`
   height: 70px;
   color: white;
-  border: 1px solid #0385fd;
+  border: 0px;
   background-color: #0385fd;
   border-radius: 5px;
   cursor: pointer;

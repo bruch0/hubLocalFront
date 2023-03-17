@@ -13,6 +13,7 @@ import {
   DisclaimerContent,
   LoginPageFormHolder,
   Logo,
+  GoToRegister,
 } from "./styles";
 
 const LoginPage = () => {
@@ -63,6 +64,7 @@ const LoginPage = () => {
             onSubmit: (d: any) => console.log(d),
           }}
         />{" "}
+        <GoToRegister to="/register">Criar conta</GoToRegister>
       </LoginPageFormHolder>
     </PageHolder>
   );
