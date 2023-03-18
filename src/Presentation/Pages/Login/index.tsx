@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
+import { ReactToastifyUserFeedback } from "@Frameworks/Feedback/react-toastfy";
 import UserContext from "@Contexts/User";
 
 import FormBuilder from "@Components/FormBuilder";
@@ -27,6 +27,7 @@ import {
 const LoginPage = () => {
   const context = useContext(UserContext);
   const navigate = useNavigate();
+  const toaster = new ReactToastifyUserFeedback();
 
   const formInputs = [
     {
@@ -74,11 +75,11 @@ const LoginPage = () => {
             onSubmit: (data: { email: string; password: string }) =>
               login(data)
                 .then(({ data }) => {
-                  toast.success("Logado com sucesso");
+                  toaster.success("Logado com sucesso");
                   context.name = data.content.name;
                   navigate("/companies");
                 })
-                .catch(({ response }) => toast.error(response.data.message)),
+                .catch(({ response }) => toaster.error(response.data.message)),
           }}
         />{" "}
         <GoToRegister to="/register">Criar conta</GoToRegister>
