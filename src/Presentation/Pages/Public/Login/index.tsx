@@ -29,6 +29,7 @@ import {
 const LoginPage = () => {
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
+
   const toaster = new ReactToastifyUserFeedback();
   const cookieManager = new JsCookieManager();
 
@@ -57,6 +58,20 @@ const LoginPage = () => {
     },
   ];
 
+  const onSubmitForm = (data: { email: string; password: string }) =>
+    login(data)
+      .then(({ data }) => {
+        toaster.success("Logado com sucesso");
+        userContext.name = data.content.name;
+        userContext.token = data.content.token;
+
+        cookieManager.setCookie(data.content.token, "token");
+        cookieManager.setCookie(data.content.name, "name");
+
+        navigate("/companies");
+      })
+      .catch(({ response }) => toaster.error(response.data.message));
+
   return (
     <PageHolder>
       <LoginPageDisclaimerHolder>
@@ -79,19 +94,7 @@ const LoginPage = () => {
           formData={{
             inputs: formInputs,
             submitButton: "Logar",
-            onSubmit: (data: { email: string; password: string }) =>
-              login(data)
-                .then(({ data }) => {
-                  toaster.success("Logado com sucesso");
-                  userContext.name = data.content.name;
-                  userContext.token = data.content.token;
-
-                  cookieManager.setCookie(data.content.token, "token");
-                  cookieManager.setCookie(data.content.name, "name");
-
-                  navigate("/companies");
-                })
-                .catch(({ response }) => toaster.error(response.data.message)),
+            onSubmit: onSubmitForm,
           }}
         />{" "}
         <GoToRegister to="/register">Criar conta</GoToRegister>

@@ -27,6 +27,7 @@ import {
 const RegisterPage = () => {
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
+
   const toaster = new ReactToastifyUserFeedback();
 
   const formInputs = [
@@ -69,6 +70,19 @@ const RegisterPage = () => {
     },
   ];
 
+  const onSubmitForm = (data: {
+    name: string;
+    email: string;
+    password: string;
+  }) =>
+    createAccount(data)
+      .then(({ data }) => {
+        toaster.success("Conta criada com sucesso");
+        userContext.email = data.content.email;
+        navigate("/");
+      })
+      .catch(({ response }) => toaster.error(response.data.message));
+
   return (
     <PageHolder>
       <RegisterPageDisclaimerHolder>
@@ -91,18 +105,7 @@ const RegisterPage = () => {
           formData={{
             inputs: formInputs,
             submitButton: "Registrar",
-            onSubmit: (data: {
-              name: string;
-              email: string;
-              password: string;
-            }) =>
-              createAccount(data)
-                .then(({ data }) => {
-                  toaster.success("Conta criada com sucesso");
-                  userContext.email = data.content.email;
-                  navigate("/");
-                })
-                .catch(({ response }) => toaster.error(response.data.message)),
+            onSubmit: onSubmitForm,
           }}
         />{" "}
         <GoToRegister to="/">Logar</GoToRegister>
