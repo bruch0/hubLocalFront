@@ -34,29 +34,32 @@ const RegisterPage = () => {
     {
       name: "name",
       label: "Nome",
-      patern: /^[a-z ,.'-]+$/i,
+      pattern: /^[a-z ,.'-]+$/i,
       errorMessage: "Insira seu nome e sobrenome",
       required: true,
       disabled: false,
+      nested: false,
       type: "text",
     },
     {
       name: "email",
       label: "Email",
-      patern: /[a-zA-Z0-9]+@+[a-zA-Z0-9]+\.+[a-zA-Z0-9]/,
+      pattern: /[a-zA-Z0-9]+@+[a-zA-Z0-9]+\.+[a-zA-Z0-9]/,
       errorMessage: "Insira um email válido",
       required: true,
       disabled: false,
+      nested: false,
       type: "text",
     },
     {
       name: "password",
       label: "Senha",
-      patern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/,
+      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$/,
       errorMessage:
         "Sua senha deve conter oito caracteres, uma letra maiúscula, uma letra minúscula e um dígito",
       required: true,
       disabled: false,
+      nested: false,
       type: "password",
     },
     {
@@ -66,6 +69,8 @@ const RegisterPage = () => {
       errorMessage: "Senhas não conferem",
       required: true,
       disabled: false,
+      nested: false,
+
       type: "password",
     },
   ];
@@ -104,7 +109,12 @@ const RegisterPage = () => {
         <FormBuilder
           formData={{
             inputs: formInputs,
-            submitButton: "Registrar",
+            submitButton: {
+              value: "REGISTRAR",
+              height: "70px",
+              width: "100%",
+              fontSize: "25px",
+            },
             onSubmit: onSubmitForm,
           }}
         />{" "}

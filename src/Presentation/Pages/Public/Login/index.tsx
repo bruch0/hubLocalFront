@@ -42,10 +42,11 @@ const LoginPage = () => {
       name: "email",
       label: "Email",
       defaultValue: userContext.email,
-      patern: /[a-zA-Z0-9]+@+[a-zA-Z0-9]+\.+[a-zA-Z0-9]/,
+      pattern: /[a-zA-Z0-9]+@+[a-zA-Z0-9]+\.+[a-zA-Z0-9]/,
       errorMessage: "Insira um email válido",
       required: true,
       disabled: false,
+      nested: false,
       type: "text",
     },
     {
@@ -54,6 +55,7 @@ const LoginPage = () => {
       errorMessage: "Insira sua senha",
       required: true,
       disabled: false,
+      nested: false,
       type: "password",
     },
   ];
@@ -93,7 +95,12 @@ const LoginPage = () => {
         <FormBuilder
           formData={{
             inputs: formInputs,
-            submitButton: "Logar",
+            submitButton: {
+              value: "LOGAR",
+              height: "70px",
+              width: "100%",
+              fontSize: "25px",
+            },
             onSubmit: onSubmitForm,
           }}
         />{" "}
