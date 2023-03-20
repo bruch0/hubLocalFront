@@ -12,13 +12,15 @@ import { Company } from "@Interfaces";
 
 import UserContext from "@Contexts/User";
 
-import { getUserCompanies } from "@Service/api";
+import { createCompany, getUserCompanies } from "@Service/api";
 
 import { NoCompanies, PageHolder } from "./styles";
+import CompaniesTable from "@Components/CompaniesTable";
 
 const CompaniesPage = () => {
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
+  const toaster = new ReactToastifyUserFeedback();
   const modalManager = new ReactModal();
 
   const [companyData, setCompanyData] = useState<{
@@ -45,7 +47,7 @@ const CompaniesPage = () => {
       });
   }, [navigate, userContext, companyData.itemsPerPage, companyData.pageNumber]);
 
-  const formInputs = [
+  const createCompanyFormInputs = [
     {
       name: "name",
       label: "Nome",
@@ -70,7 +72,7 @@ const CompaniesPage = () => {
     {
       name: "taxId",
       label: "CNPJ",
-      pattern: /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/,
+      pattern: /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/,
       errorMessage: "Insira um CNPJ válido",
       mask: "11",
       required: true,
@@ -79,6 +81,21 @@ const CompaniesPage = () => {
       type: "text",
     },
   ];
+
+  const createCompanySubmitForm = (data: {
+    name: string;
+    siteUrl: string;
+    taxId: string;
+  }) =>
+    createCompany(userContext.token, data)
+      .then(({ data }) => {
+        setCompanyData({
+          ...companyData,
+          companies: [...companyData.companies, data.content],
+        });
+        toaster.success("Empresa cadastrada");
+      })
+      .catch(({ response }) => toaster.error(response.data.message));
 
   return (
     <>
@@ -92,14 +109,14 @@ const CompaniesPage = () => {
               modalContent: (
                 <FormBuilder
                   formData={{
-                    inputs: formInputs,
+                    inputs: createCompanyFormInputs,
                     submitButton: {
                       value: "Adicionar",
                       height: "50px",
                       width: "100px",
                       fontSize: "100%",
                     },
-                    onSubmit: (e: any) => console.log(e),
+                    onSubmit: createCompanySubmitForm,
                     modalBottom: true,
                   }}
                 />
@@ -115,6 +132,39 @@ const CompaniesPage = () => {
                 />
               ),
             })}
+          </>
+        )}
+        {companyData.companies.length > 0 && (
+          <>
+            {modalManager.modal({
+              modalTitle: "Adicionar Empresa",
+              modalContent: (
+                <FormBuilder
+                  formData={{
+                    inputs: createCompanyFormInputs,
+                    submitButton: {
+                      value: "Adicionar",
+                      height: "50px",
+                      width: "100px",
+                      fontSize: "100%",
+                    },
+                    onSubmit: createCompanySubmitForm,
+                    modalBottom: true,
+                  }}
+                />
+              ),
+              backgroundColor: "#0385FD",
+              openButton: (
+                <ActionButton
+                  value="Adicionar Empresa"
+                  width="300px"
+                  height="50px"
+                  disabled={false}
+                  onClick={() => null}
+                />
+              ),
+            })}
+            <CompaniesTable companies={companyData.companies} />
           </>
         )}
       </PageHolder>
