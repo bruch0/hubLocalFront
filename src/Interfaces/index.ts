@@ -9,6 +9,7 @@ export interface Company {
   name: string;
   siteUrl: string;
   taxId: string;
+  locals: Local[];
 }
 
 export interface Local {
