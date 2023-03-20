@@ -42,12 +42,16 @@ export default function App({ formData }: { formData: FormData }) {
     control,
     handleSubmit,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
 
   const { inputs, submitButton, modalBottom } = formData;
 
-  const onSubmit = (data: any): void => formData.onSubmit(data);
+  const onSubmit = (data: any): void => {
+    formData.onSubmit(data);
+    reset();
+  };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
