@@ -1,9 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GlobalStyles from "../Components/Shared/GlobalStyles";
 
-import LoginPage from "@Pages/Login";
-import RegisterPage from "@Pages/Register";
-import CompaniesPage from "@Pages/Companies";
+import PrivateProvider from "@Pages/Private/PrivateProvider";
+
+import LoginPage from "@Pages/Public/Login";
+import RegisterPage from "@Pages/Public/Register";
+import CompaniesPage from "@Pages/Private/Companies";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -17,7 +19,12 @@ const Router = () => {
     },
     {
       path: "/companies",
-      element: <CompaniesPage />,
+      element: (
+        <>
+          <PrivateProvider />
+          <CompaniesPage />
+        </>
+      ),
     },
   ]);
 
