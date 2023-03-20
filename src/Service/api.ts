@@ -28,4 +28,19 @@ const createCompany = (
   data: { name: string; siteUrl: string; taxId: string }
 ) => axiosApiConnection.post(`${baseURL}/companies`, data, authToken);
 
-export { createAccount, login, getUserCompanies, createCompany };
+const updateCompany = (
+  authToken: string,
+  data: { id: number; name: string; siteUrl: string; taxId: string }
+) => axiosApiConnection.put(`${baseURL}/companies`, data, authToken);
+
+const deleteCompany = (authToken: string, id: number) =>
+  axiosApiConnection.delete(`${baseURL}/companies/${id}`, authToken);
+
+export {
+  createAccount,
+  login,
+  getUserCompanies,
+  createCompany,
+  updateCompany,
+  deleteCompany,
+};
