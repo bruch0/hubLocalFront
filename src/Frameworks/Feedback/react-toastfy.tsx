@@ -4,8 +4,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { GenericUserFeedback } from "@Core/Feedback";
 
 export class ReactToastifyUserFeedback implements GenericUserFeedback {
-  error = (message: string) => toast.error(message);
-  success = (message: string) => toast.success(message);
+  error = (message: string) =>
+    toast.error(message, {
+      toastId: 1,
+    });
+  success = (message: string) =>
+    toast.success(message, {
+      toastId: 2,
+    });
   provider = () => (
     <ToastContainer
       hideProgressBar={true}
