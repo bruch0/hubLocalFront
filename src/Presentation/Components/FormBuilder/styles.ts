@@ -64,6 +64,7 @@ interface SubmitProps {
   height: string;
   width: string;
   fontSize: string;
+  red: boolean;
 }
 
 const Submit = styled.button<SubmitProps>`
@@ -72,7 +73,7 @@ const Submit = styled.button<SubmitProps>`
   height: ${(props) => props.height};
   color: white;
   border: 0px;
-  background-color: #0385fd;
+  background-color: ${(props) => (props.red ? "#C90808" : "#0385fd")};
   border-radius: 5px;
   cursor: pointer;
   font-size: ${(props) => props.fontSize};
