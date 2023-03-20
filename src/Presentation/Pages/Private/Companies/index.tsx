@@ -7,6 +7,7 @@ import { ReactModal } from "@Frameworks/Modal/react-modal";
 import Navbar from "@Components/Shared/Navbar";
 import ActionButton from "@Components/Shared/ActionButton";
 import FormBuilder from "@Components/FormBuilder";
+import CompaniesTable from "@Components/CompaniesTable";
 
 import { Company } from "@Interfaces";
 
@@ -14,8 +15,7 @@ import UserContext from "@Contexts/User";
 
 import { createCompany, getUserCompanies } from "@Service/api";
 
-import { NoCompanies, PageHolder } from "./styles";
-import CompaniesTable from "@Components/CompaniesTable";
+import { NoCompanies, PageHolder, AddCompanyButtonHolder } from "./styles";
 
 const CompaniesPage = () => {
   const userContext = useContext(UserContext);
@@ -28,6 +28,10 @@ const CompaniesPage = () => {
     itemsPerPage: number;
     pageNumber: number;
   }>({ companies: [], itemsPerPage: 10, pageNumber: 1 });
+
+  const [refetchDataSignal, setRefetchDataSignal] = useState<{
+    refetchData: {};
+  }>({ refetchData: {} });
 
   useEffect(() => {
     getUserCompanies(
@@ -45,7 +49,17 @@ const CompaniesPage = () => {
       .catch(() => {
         userContext.token = "";
       });
-  }, [navigate, userContext, companyData.itemsPerPage, companyData.pageNumber]);
+  }, [
+    navigate,
+    userContext,
+    companyData.itemsPerPage,
+    companyData.pageNumber,
+    refetchDataSignal,
+  ]);
+
+  const refetchData = () => {
+    setRefetchDataSignal({ refetchData: { ...{} } });
+  };
 
   const createCompanyFormInputs = [
     {
@@ -88,11 +102,8 @@ const CompaniesPage = () => {
     taxId: string;
   }) =>
     createCompany(userContext.token, data)
-      .then(({ data }) => {
-        setCompanyData({
-          ...companyData,
-          companies: [...companyData.companies, data.content],
-        });
+      .then(() => {
+        refetchData();
         toaster.success("Empresa cadastrada");
       })
       .catch(({ response }) => toaster.error(response.data.message));
@@ -136,35 +147,41 @@ const CompaniesPage = () => {
         )}
         {companyData.companies.length > 0 && (
           <>
-            {modalManager.modal({
-              modalTitle: "Adicionar Empresa",
-              modalContent: (
-                <FormBuilder
-                  formData={{
-                    inputs: createCompanyFormInputs,
-                    submitButton: {
-                      value: "Adicionar",
-                      height: "50px",
-                      width: "100px",
-                      fontSize: "100%",
-                    },
-                    onSubmit: createCompanySubmitForm,
-                    modalBottom: true,
-                  }}
-                />
-              ),
-              backgroundColor: "#0385FD",
-              openButton: (
-                <ActionButton
-                  value="Adicionar Empresa"
-                  width="300px"
-                  height="50px"
-                  disabled={false}
-                  onClick={() => null}
-                />
-              ),
-            })}
-            <CompaniesTable companies={companyData.companies} />
+            <AddCompanyButtonHolder>
+              {modalManager.modal({
+                modalTitle: "Adicionar Empresa",
+                modalContent: (
+                  <FormBuilder
+                    formData={{
+                      inputs: createCompanyFormInputs,
+                      submitButton: {
+                        value: "Adicionar",
+                        height: "50px",
+                        width: "100px",
+                        fontSize: "100%",
+                      },
+                      onSubmit: createCompanySubmitForm,
+                      modalBottom: true,
+                    }}
+                  />
+                ),
+                backgroundColor: "#0385FD",
+                openButton: (
+                  <ActionButton
+                    value="Adicionar Empresa"
+                    width="300px"
+                    height="50px"
+                    disabled={false}
+                    onClick={() => null}
+                  />
+                ),
+              })}
+            </AddCompanyButtonHolder>
+            <CompaniesTable
+              companies={companyData.companies}
+              authToken={userContext.token}
+              refetchData={refetchData}
+            />
           </>
         )}
       </PageHolder>

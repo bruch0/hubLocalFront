@@ -17,4 +17,12 @@ const NoCompanies = styled.p`
   margin-bottom: 30px;
 `;
 
-export { PageHolder, NoCompanies };
+const AddCompanyButtonHolder = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 5%;
+`;
+
+export { PageHolder, NoCompanies, AddCompanyButtonHolder };
