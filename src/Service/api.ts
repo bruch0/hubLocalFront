@@ -23,4 +23,9 @@ const getUserCompanies = (
     authToken
   );
 
-export { createAccount, login, getUserCompanies };
+const createCompany = (
+  authToken: string,
+  data: { name: string; siteUrl: string; taxId: string }
+) => axiosApiConnection.post(`${baseURL}/companies`, data, authToken);
+
+export { createAccount, login, getUserCompanies, createCompany };
