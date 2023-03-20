@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import {
@@ -26,11 +27,13 @@ interface FormData {
     validatePassword?: boolean;
     mask?: string;
   }>;
+  message?: string;
   submitButton: {
     value: string;
     height: string;
     width: string;
     fontSize: string;
+    red?: boolean;
   };
   onSubmit: Function;
   modalBottom?: boolean;
@@ -42,59 +45,68 @@ export default function App({ formData }: { formData: FormData }) {
     control,
     handleSubmit,
     watch,
-    reset,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const { inputs, submitButton, modalBottom } = formData;
+  const { inputs, submitButton, modalBottom, message } = formData;
 
-  const onSubmit = (data: any): void => {
-    formData.onSubmit(data);
-    reset();
-  };
-
+  const onSubmit = (data: any): void => formData.onSubmit(data);
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <InputContainer modal={!!modalBottom}>
-        {inputs.map((userInput) => (
-          <InputHolder nested={userInput.nested}>
-            <Label htmlFor={userInput.name}>{userInput.label}</Label>
-            {userInput.mask ? (
-              <Controller
-                name={userInput.name}
-                control={control}
-                rules={{
-                  required: userInput.required,
-                  pattern: userInput.pattern,
-                  value: userInput.defaultValue,
-                }}
-                render={({ field }) => (
-                  <MaskedInput
-                    mask="99.999.999/9999-99"
-                    onChange={field.onChange}
+        {inputs.length > 0
+          ? inputs.map((userInput) => (
+              <InputHolder nested={userInput.nested}>
+                <Label htmlFor={userInput.name}>{userInput.label}</Label>
+                {userInput.mask ? (
+                  <Controller
+                    name={userInput.name}
+                    control={control}
+                    rules={{
+                      required: userInput.required,
+                      pattern: userInput.pattern,
+                    }}
+                    render={({ field }) => {
+                      // eslint-disable-next-line react-hooks/rules-of-hooks
+                      useEffect(() => {
+                        setValue(userInput.name, userInput.defaultValue);
+                      }, []);
+
+                      return (
+                        <MaskedInput
+                          mask="99.999.999/9999-99"
+                          {...field}
+                          ref={null}
+                          defaultValue={userInput.defaultValue}
+                          disabled={userInput.disabled}
+                        />
+                      );
+                    }}
+                  />
+                ) : (
+                  <Input
+                    {...register(userInput.name, {
+                      required: userInput.required,
+                      pattern: userInput.pattern,
+                      value: userInput.defaultValue,
+                      validate: userInput.validatePassword
+                        ? (value: string) => {
+                            if (watch("password") !== value) {
+                              return "Your passwords do no match";
+                            }
+                          }
+                        : undefined,
+                    })}
+                    type={userInput.type}
                   />
                 )}
-              />
-            ) : (
-              <Input
-                {...register(userInput.name, {
-                  required: userInput.required,
-                  pattern: userInput.pattern,
-                  value: userInput.defaultValue,
-                  validate: userInput.validatePassword
-                    ? (value: string) => {
-                        if (watch("password") !== value) {
-                          return "Your passwords do no match";
-                        }
-                      }
-                    : undefined,
-                })}
-                type={userInput.type}
-              />
-            )}
-            {errors[userInput.name] && <Error>{userInput.errorMessage}</Error>}
-          </InputHolder>
-        ))}
+                {errors[userInput.name] && (
+                  <Error>{userInput.errorMessage}</Error>
+                )}
+              </InputHolder>
+            ))
+          : message}
       </InputContainer>
 
       {modalBottom ? (
@@ -105,6 +117,7 @@ export default function App({ formData }: { formData: FormData }) {
             height={submitButton.height}
             width={submitButton.width}
             fontSize={submitButton.fontSize}
+            red={!!submitButton.red}
           >
             {isSubmitting ? (
               <svg
@@ -136,6 +149,7 @@ export default function App({ formData }: { formData: FormData }) {
           height={submitButton.height}
           width={submitButton.width}
           fontSize={submitButton.fontSize}
+          red={!!submitButton.red}
         >
           {isSubmitting ? (
             <svg

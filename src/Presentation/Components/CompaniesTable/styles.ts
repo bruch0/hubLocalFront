@@ -41,4 +41,8 @@ const TableHolder = styled.div`
   }
 `;
 
-export { TableHolder };
+const ActionsHolder = styled.div`
+  display: flex;
+`;
+
+export { TableHolder, ActionsHolder };
