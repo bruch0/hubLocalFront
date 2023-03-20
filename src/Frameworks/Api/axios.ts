@@ -20,13 +20,17 @@ export class AxiosApiConnection implements GenericApiConnection {
   };
 
   put = async (url: string, data: any, token?: string) => {
-    const response = await axios.put(url, data);
+    const response = await axios.put(url, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     return { data: { statusCode: response.status, content: response.data } };
   };
 
   delete = async (url: string, token?: string) => {
-    const response = await axios.delete(url);
+    const response = await axios.delete(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     return { data: { statusCode: response.status, content: response.data } };
   };
