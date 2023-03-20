@@ -31,7 +31,7 @@ const Input = styled.input`
   }
 `;
 
-const Submit = styled.input`
+const Submit = styled.button`
   height: 70px;
   color: white;
   border: 0px;
