@@ -1,7 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ReactToastifyUserFeedback } from "@Frameworks/Feedback/react-toastfy";
+import { JsCookieManager } from "@Frameworks/Cookie/js-cookie";
+
 import UserContext from "@Contexts/User";
 
 import FormBuilder from "@Components/FormBuilder";
@@ -25,15 +27,20 @@ import {
 } from "./styles";
 
 const LoginPage = () => {
-  const context = useContext(UserContext);
+  const userContext = useContext(UserContext);
   const navigate = useNavigate();
   const toaster = new ReactToastifyUserFeedback();
+  const cookieManager = new JsCookieManager();
+
+  useEffect(() => {
+    if (userContext.token) navigate("/companies");
+  }, [userContext, navigate]);
 
   const formInputs = [
     {
       name: "email",
       label: "Email",
-      defaultValue: context.email,
+      defaultValue: userContext.email,
       patern: /[a-zA-Z0-9]+@+[a-zA-Z0-9]+\.+[a-zA-Z0-9]/,
       errorMessage: "Insira um email válido",
       required: true,
@@ -76,7 +83,12 @@ const LoginPage = () => {
               login(data)
                 .then(({ data }) => {
                   toaster.success("Logado com sucesso");
-                  context.name = data.content.name;
+                  userContext.name = data.content.name;
+                  userContext.token = data.content.token;
+
+                  cookieManager.setCookie(data.content.token, "token");
+                  cookieManager.setCookie(data.content.name, "name");
+
                   navigate("/companies");
                 })
                 .catch(({ response }) => toaster.error(response.data.message)),

@@ -25,7 +25,7 @@ import {
 } from "./styles";
 
 const RegisterPage = () => {
-  const context = useContext(UserContext);
+  const userContext = useContext(UserContext);
   const navigate = useNavigate();
   const toaster = new ReactToastifyUserFeedback();
 
@@ -99,7 +99,7 @@ const RegisterPage = () => {
               createAccount(data)
                 .then(({ data }) => {
                   toaster.success("Conta criada com sucesso");
-                  context.email = data.content.email;
+                  userContext.email = data.content.email;
                   navigate("/");
                 })
                 .catch(({ response }) => toaster.error(response.data.message)),
