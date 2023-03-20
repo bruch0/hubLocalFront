@@ -43,7 +43,6 @@ export class ReactModal implements GenericModal {
           isOpen={isOpen}
           afterOpen={afterOpen}
           beforeClose={beforeClose}
-          onBackgroundClick={toggleModal}
           onEscapeKeydown={toggleModal}
           opacity={opacity}
           backgroundProps={{ opacity }}
