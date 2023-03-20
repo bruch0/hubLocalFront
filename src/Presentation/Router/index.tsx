@@ -3,6 +3,7 @@ import GlobalStyles from "../Components/Shared/GlobalStyles";
 
 import LoginPage from "@Pages/Login";
 import RegisterPage from "@Pages/Register";
+import CompaniesPage from "@Pages/Companies";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -13,6 +14,10 @@ const Router = () => {
     {
       path: "/register",
       element: <RegisterPage />,
+    },
+    {
+      path: "/companies",
+      element: <CompaniesPage />,
     },
   ]);
 

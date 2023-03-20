@@ -1,16 +1,20 @@
 export class GenericApiConnection {
   get: (
-    url: string
+    url: string,
+    auth?: string
   ) => Promise<{ data: { statusCode: number; content: string } }>;
   post: (
     url: string,
-    data: any
+    data: any,
+    auth?: string
   ) => Promise<{ data: { statusCode: number; content: string } }>;
   put: (
     url: string,
-    data: any
+    data: any,
+    auth?: string
   ) => Promise<{ data: { statusCode: number; content: string } }>;
   delete: (
-    url: string
+    url: string,
+    auth?: string
   ) => Promise<{ data: { statusCode: number; content: string } }>;
 }

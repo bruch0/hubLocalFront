@@ -13,4 +13,7 @@ const createAccount = (data: {
 const login = (data: { email: string; password: string }) =>
   axiosApiConnection.post(`${baseURL}/users/login`, data);
 
-export { createAccount, login };
+const getUserCompanies = (authToken: string) =>
+  axiosApiConnection.get("/companies", authToken);
+
+export { createAccount, login, getUserCompanies };
