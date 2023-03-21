@@ -6,6 +6,7 @@ import { ReactModal } from "@Frameworks/Modal/react-modal";
 
 import Navbar from "@Components/Shared/Navbar";
 import ActionButton from "@Components/Shared/ActionButton";
+import Pagination from "@Components/Shared/Pagination";
 import FormBuilder from "@Components/FormBuilder";
 import CompaniesTable from "@Components/CompaniesTable";
 
@@ -15,7 +16,12 @@ import UserContext from "@Contexts/User";
 
 import { createCompany, getUserCompanies } from "@Service/api";
 
-import { NoCompanies, PageHolder, AddCompanyButtonHolder } from "./styles";
+import {
+  NoCompanies,
+  PageHolder,
+  AddCompanyButtonHolder,
+  TableAndPaginationHolder,
+} from "./styles";
 
 const CompaniesPage = () => {
   const userContext = useContext(UserContext);
@@ -27,7 +33,11 @@ const CompaniesPage = () => {
     companies: Company[];
     itemsPerPage: number;
     pageNumber: number;
-  }>({ companies: [], itemsPerPage: 10, pageNumber: 1 });
+    totalPages: number;
+  }>({ companies: [], itemsPerPage: 10, pageNumber: 1, totalPages: 1 });
+
+  const changeItemsPerPage = (items: number) =>
+    setCompanyData({ ...companyData, itemsPerPage: items });
 
   const [refetchDataSignal, setRefetchDataSignal] = useState<{
     refetchData: {};
@@ -43,7 +53,8 @@ const CompaniesPage = () => {
         setCompanyData({
           itemsPerPage: companyData.itemsPerPage,
           pageNumber: companyData.pageNumber,
-          companies: data.content,
+          companies: data.content.companies,
+          totalPages: data.content.pages,
         })
       )
       .catch(() => {
@@ -177,11 +188,17 @@ const CompaniesPage = () => {
                 ),
               })}
             </AddCompanyButtonHolder>
-            <CompaniesTable
-              companies={companyData.companies}
-              authToken={userContext.token}
-              refetchData={refetchData}
-            />
+            <TableAndPaginationHolder>
+              <CompaniesTable
+                companies={companyData.companies}
+                authToken={userContext.token}
+                refetchData={refetchData}
+              />
+              <Pagination
+                changeItemsPerPage={changeItemsPerPage}
+                itemsPerPage={companyData.itemsPerPage}
+              />
+            </TableAndPaginationHolder>
           </>
         )}
       </PageHolder>

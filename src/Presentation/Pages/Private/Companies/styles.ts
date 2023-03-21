@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 const PageHolder = styled.main`
-  width: 100vw;
-  height: calc(100vh - 80px);
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  margin: 0px;
+  margin-top: 50px;
+  padding: 20px 0px;
 `;
 
 const NoCompanies = styled.p`
@@ -25,4 +27,21 @@ const AddCompanyButtonHolder = styled.div`
   padding-right: 5%;
 `;
 
-export { PageHolder, NoCompanies, AddCompanyButtonHolder };
+const TableAndPaginationHolder = styled.div`
+  width: 90%;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  overflow: hidden;
+`;
+
+export {
+  PageHolder,
+  NoCompanies,
+  AddCompanyButtonHolder,
+  TableAndPaginationHolder,
+};

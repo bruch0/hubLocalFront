@@ -1,31 +1,32 @@
 import styled from "styled-components";
 
 const TableHolder = styled.div`
-  width: 90%;
+  width: 100%;
 
   table {
     border: 1px solid;
     width: 100%;
-    margin-top: 25px;
     border-collapse: collapse;
     border: 0px;
-    border-radius: 5px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
     thead {
       color: black;
       border-radius: 5px 5px 0px 0px;
       font-weight: 600;
-      border-bottom: 1px solid #e4e4e4;
+      border: 1px solid #e4e4e4;
+      border-top: 0px;
     }
 
     tr {
-      border-bottom: 1px solid #e4e4e4;
+      border: 1px solid #e4e4e4;
+      border-top: 0px;
+
+      :last-of-type {
+        border-bottom: 1px solid #d6d6d6;
+      }
     }
 
     tbody {
-      border-radius: 0px 0px 5px 5px;
-      border-bottom: 1px solid #e4e4e4;
     }
 
     th,
