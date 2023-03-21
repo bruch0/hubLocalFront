@@ -12,7 +12,6 @@ const ScrollableHolder = styled.div`
   display: flex;
   flex-direction: column;
   max-height: 320px;
-  height: 100%;
   width: 20%;
   overflow: scroll;
   border: 0px;
@@ -59,7 +58,6 @@ const SelectableOption = styled.button`
   margin: 0px;
   padding: 0px;
   width: 100%;
-  height: 100%;
   background-color: transparent;
   font-weight: 400;
   cursor: pointer;
