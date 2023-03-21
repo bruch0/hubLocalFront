@@ -214,7 +214,7 @@ const CompaniesTable = ({
                 <FormBuilder
                   formData={{
                     inputs: [],
-                    message: `O local ${info.row.original.name} será excluída. Tem certeza dessa ação?`,
+                    message: `O local ${info.row.original.name} será excluído. Tem certeza dessa ação?`,
                     submitButton: {
                       value: "Excluir",
                       height: "50px",

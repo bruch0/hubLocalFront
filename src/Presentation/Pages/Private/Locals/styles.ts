@@ -12,7 +12,7 @@ const PageHolder = styled.main<PageHolderProps>`
   align-items: center;
   justify-content: center;
   margin: 0px;
-  margin-top: 50px;
+  margin-top: ${(props) => (props.empty ? "0px" : "50px")};
   padding: 20px 0px;
 `;
 
