@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 
 import { ReactToastifyUserFeedback } from "@Frameworks/Feedback/react-toastfy";
+import { JsCookieManager } from "@Frameworks/Cookie/js-cookie";
 import { ReactModal } from "@Frameworks/Modal/react-modal";
 
 import Navbar from "@Components/Shared/Navbar";
@@ -48,19 +49,27 @@ const CompaniesPage = () => {
   }>({ refetchData: {} });
 
   useEffect(() => {
+    const cookieManager = new JsCookieManager();
+
     getUserCompanies(
       userContext.token,
       companyData.itemsPerPage,
       companyData.pageNumber
     )
-      .then(({ data }) =>
+      .then(({ data }) => {
+        userContext.userCompanies = data.content.companies;
+        cookieManager.setCookie(
+          JSON.stringify(data.content.companies),
+          "userCompanies"
+        );
+
         setCompanyData({
           itemsPerPage: companyData.itemsPerPage,
           pageNumber: companyData.pageNumber,
           companies: data.content.companies,
           totalPages: data.content.pages,
-        })
-      )
+        });
+      })
       .catch(() => {
         userContext.token = "";
       });

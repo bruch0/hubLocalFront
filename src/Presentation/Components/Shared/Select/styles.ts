@@ -2,50 +2,29 @@ import styled from "styled-components";
 
 const RelativeHolder = styled.div`
   position: relative;
-  width: ${(props: { width: string }) => props.width};
-  z-index: 3;
+  height: 320px;
+  z-index: 1;
+  width: 100%;
 `;
-
-interface ScrollableHolderProps {
-  maxHeight: string;
-  width: string;
-  optionHeight: number;
-  optionsQuantity: number;
-}
 
 const ScrollableHolder = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  max-height: ${(props: ScrollableHolderProps) => props.maxHeight};
-  width: ${(props: ScrollableHolderProps) => props.width};
+  max-height: 320px;
+  height: 100%;
+  width: 20%;
   overflow: scroll;
-  border: 1px solid #00274e80;
-  border-radius: 5px;
+  border: 0px;
+  background-color: #efeded;
+  top: 120px;
 
   ::-webkit-scrollbar {
-    width: ${(props: ScrollableHolderProps) =>
-      props.optionHeight * props.optionsQuantity > parseInt(props.maxHeight)
-        ? "4px"
-        : "0px"};
-  }
-
-  ::-webkit-scrollbar-track {
-    background: white;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #e2e8f1;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #e2e8f1;
+    width: 0px;
   }
 `;
 
 interface SelectedOptionProps {
-  height?: string;
-  width: string;
   disabled?: boolean;
 }
 
@@ -53,11 +32,14 @@ const SelectedOption = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #00274e80;
-  height: ${(props: SelectedOptionProps) => props.height ?? "70px"};
+  height: 80px;
   border-radius: 5px;
-  width: ${(props: SelectedOptionProps) => props.width};
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
+  width: 20%;
   opacity: ${(props: SelectedOptionProps) => (props.disabled ? " 0.6" : "")};
+  height: 100%;
   background-color: transparent;
   font-weight: 400;
   cursor: pointer;
@@ -70,15 +52,20 @@ const SelectedOption = styled.button`
 const SelectableOption = styled.button`
   display: flex;
   align-items: center;
-  height: ${(props: { height?: string }) => props.height ?? "70px"};
-  min-height: ${(props: { height?: string }) => props.height ?? "70px"};
+  justify-content: space-between;
+  height: 80px;
+  border-radius: 5px;
+  border: 0px;
+  margin: 0px;
+  padding: 0px;
   width: 100%;
+  height: 100%;
   background-color: transparent;
   font-weight: 400;
   cursor: pointer;
 
-  :hover {
-    background-color: #ffe8d8;
+  :disabled {
+    cursor: not-allowed;
   }
 `;
 

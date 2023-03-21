@@ -8,19 +8,33 @@ const NavbarHolder = styled.nav`
   justify-content: space-between;
 `;
 
-const CompanyDropdown = styled.div`
-  width: 20%;
-  height: 100%;
+interface CompanyDropdownProps {
+  dropdownAvailable: boolean;
+  forceHeight?: boolean;
+}
+
+const CompanyDropdown = styled.div<CompanyDropdownProps>`
+  width: 100%;
   display: flex;
   align-items: center;
   padding-left: 25px;
   position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: ${(props) =>
+    props.dropdownAvailable ? " #efeded" : "transparent"};
+  cursor: ${(props) => (props.dropdownAvailable ? "" : "")};
+  height: ${(props) => (props.forceHeight ? "80px" : "100%")};
 `;
 
 const CompanyName = styled.p`
   font-size: 30px;
   font-weight: bold;
   margin-left: 30px;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;
 
 const UserDropdown = styled.div`
