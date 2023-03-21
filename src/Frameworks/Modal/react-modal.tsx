@@ -10,13 +10,18 @@ export class ReactModal implements GenericModal {
     modalTitle,
     backgroundColor,
     openButton,
+    isOpen,
+    setIsOpen,
   }: {
     modalContent: React.ReactElement;
     modalTitle: string;
     backgroundColor: string;
     openButton?: React.ReactElement;
+    isOpen: boolean;
+    setIsOpen:
+      | React.Dispatch<React.SetStateAction<boolean>>
+      | ((value: boolean) => void);
   }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
     const [opacity, setOpacity] = useState(0);
 
     function toggleModal() {

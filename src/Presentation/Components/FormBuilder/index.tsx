@@ -52,7 +52,10 @@ export default function App({ formData }: { formData: FormData }) {
 
   const { inputs, submitButton, modalBottom, message } = formData;
 
-  const onSubmit = (data: any): void => formData.onSubmit(data);
+  const onSubmit = (data: any): void => {
+    formData.onSubmit(data);
+  };
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <InputContainer modal={!!modalBottom}>

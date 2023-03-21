@@ -35,6 +35,7 @@ const CompaniesPage = () => {
     pageNumber: number;
     totalPages: number;
   }>({ companies: [], itemsPerPage: 10, pageNumber: 1, totalPages: 1 });
+  const [createCompanyModal, setCreateCompanyModal] = useState<boolean>(false);
 
   const changeItemsPerPage = (items: number) =>
     setCompanyData({ ...companyData, itemsPerPage: items });
@@ -114,13 +115,15 @@ const CompaniesPage = () => {
     name: string;
     siteUrl: string;
     taxId: string;
-  }) =>
+  }) => {
     createCompany(userContext.token, data)
       .then(() => {
         refetchData();
+        setCreateCompanyModal(false);
         toaster.success("Empresa cadastrada");
       })
       .catch(({ response }) => toaster.error(response.data.message));
+  };
 
   return (
     <>
@@ -130,6 +133,8 @@ const CompaniesPage = () => {
           <>
             <NoCompanies>Nenhuma empresa cadastrada!</NoCompanies>
             {modalManager.modal({
+              isOpen: createCompanyModal,
+              setIsOpen: setCreateCompanyModal,
               modalTitle: "Adicionar Empresa",
               modalContent: (
                 <FormBuilder
@@ -141,7 +146,11 @@ const CompaniesPage = () => {
                       width: "100px",
                       fontSize: "100%",
                     },
-                    onSubmit: createCompanySubmitForm,
+                    onSubmit: (data: {
+                      name: string;
+                      siteUrl: string;
+                      taxId: string;
+                    }) => createCompanySubmitForm(data),
                     modalBottom: true,
                   }}
                 />
@@ -163,6 +172,8 @@ const CompaniesPage = () => {
           <>
             <AddCompanyButtonHolder>
               {modalManager.modal({
+                isOpen: createCompanyModal,
+                setIsOpen: setCreateCompanyModal,
                 modalTitle: "Adicionar Empresa",
                 modalContent: (
                   <FormBuilder

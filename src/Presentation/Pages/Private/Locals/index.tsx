@@ -36,6 +36,7 @@ const LocalsPage = () => {
     pageNumber: number;
     totalPages: number;
   }>({ locals: [], itemsPerPage: 10, pageNumber: 1, totalPages: 1 });
+  const [createLocalModal, setCreateLocalModal] = useState<boolean>(false);
 
   const changeItemsPerPage = (items: number) =>
     setLocalData({ ...localData, itemsPerPage: items });
@@ -54,14 +55,16 @@ const LocalsPage = () => {
       localData.itemsPerPage,
       localData.pageNumber
     )
-      .then(({ data }) =>
+      .then(({ data }) => {
+        setCreateLocalModal(false);
+
         setLocalData({
           itemsPerPage: localData.itemsPerPage,
           pageNumber: localData.pageNumber,
           locals: data.content.locals,
           totalPages: data.content.pages,
-        })
-      )
+        });
+      })
       .catch(() => {
         userContext.token = "";
       });
@@ -180,6 +183,8 @@ const LocalsPage = () => {
           <>
             <NoCompanies>Nenhum local cadastrado!</NoCompanies>
             {modalManager.modal({
+              isOpen: createLocalModal,
+              setIsOpen: setCreateLocalModal,
               modalTitle: "Adicionar Local",
               modalContent: (
                 <FormBuilder
@@ -213,6 +218,8 @@ const LocalsPage = () => {
           <>
             <AddCompanyButtonHolder>
               {modalManager.modal({
+                isOpen: createLocalModal,
+                setIsOpen: setCreateLocalModal,
                 modalTitle: "Adicionar local",
                 modalContent: (
                   <FormBuilder
