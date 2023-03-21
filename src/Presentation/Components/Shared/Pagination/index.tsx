@@ -1,26 +1,37 @@
 import { useState } from "react";
 
 import {
-  PaginationHolder,
+  ItemsPerPageHolder,
   SelectedOption,
   OptionButton,
   OptionsHolder,
+  PaginationContainer,
+  PaginationHolder,
+  ItemName,
+  PageNumber,
+  ChangePageButton,
 } from "./styles";
 
 interface ItemsPerPageProps {
   changeItemsPerPage: (items: number) => void;
   itemsPerPage: number;
+  page: number;
+  maxPageNumber: number;
+  changePageNumber: (page: number) => void;
 }
 
 const ItemsPerPage = ({
   changeItemsPerPage,
   itemsPerPage,
+  page,
+  maxPageNumber,
+  changePageNumber,
 }: ItemsPerPageProps) => {
   const [openOptions, setOpenOptions] = useState<boolean>(false);
 
   const toogleOpenOptions = () => setOpenOptions(!openOptions);
 
-  const dateOptions = [
+  const paginationOptions = [
     {
       text: "10",
       onClick: () => {
@@ -65,36 +76,63 @@ const ItemsPerPage = ({
   };
 
   return (
-    <PaginationHolder>
-      <SelectedOption
-        onMouseEnter={removeCloseDropdownListener}
-        onMouseLeave={addCloseDropdownListener}
-        onClick={toogleOpenOptions}
-      >
-        <div style={{ marginRight: "10px" }}>{itemsPerPage}</div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="12"
-          height="8"
-          viewBox="0 0 12 8"
-          fill="none"
+    <PaginationContainer>
+      <PaginationHolder>
+        <PageNumber>
+          <ItemName style={{ fontWeight: "bold", marginRight: "10px" }}>
+            Página:
+          </ItemName>
+          {page}
+        </PageNumber>
+        <ItemsPerPageHolder>
+          <SelectedOption
+            onMouseEnter={removeCloseDropdownListener}
+            onMouseLeave={addCloseDropdownListener}
+            onClick={toogleOpenOptions}
+          >
+            <div style={{ marginRight: "10px" }}>
+              <ItemName style={{ fontWeight: "bold", marginRight: "10px" }}>
+                Qt por página:
+              </ItemName>
+              {itemsPerPage}
+            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="8"
+              viewBox="0 0 12 8"
+              fill="none"
+            >
+              <path
+                d="M1.41 0.579956L6 5.16996L10.59 0.579956L12 1.99996L6 7.99996L0 1.99996L1.41 0.579956Z"
+                fill="black"
+              />
+            </svg>
+          </SelectedOption>
+          {openOptions && (
+            <OptionsHolder>
+              {paginationOptions.map((option, index) => (
+                <OptionButton onClick={option.onClick} key={index}>
+                  {option.text}
+                </OptionButton>
+              ))}
+            </OptionsHolder>
+          )}
+        </ItemsPerPageHolder>
+        <ChangePageButton
+          disabled={page - 1 === 0}
+          onClick={() => changePageNumber(page - 1)}
         >
-          <path
-            d="M1.41 0.579956L6 5.16996L10.59 0.579956L12 1.99996L6 7.99996L0 1.99996L1.41 0.579956Z"
-            fill="black"
-          />
-        </svg>
-      </SelectedOption>
-      {openOptions && (
-        <OptionsHolder>
-          {dateOptions.map((option, index) => (
-            <OptionButton onClick={option.onClick} key={index}>
-              {option.text}
-            </OptionButton>
-          ))}
-        </OptionsHolder>
-      )}
-    </PaginationHolder>
+          Anterior
+        </ChangePageButton>
+        <ChangePageButton
+          disabled={page + 1 > maxPageNumber}
+          onClick={() => changePageNumber(page + 1)}
+        >
+          Próxima
+        </ChangePageButton>
+      </PaginationHolder>
+    </PaginationContainer>
   );
 };
 

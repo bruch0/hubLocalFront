@@ -39,6 +39,9 @@ const CompaniesPage = () => {
   const changeItemsPerPage = (items: number) =>
     setCompanyData({ ...companyData, itemsPerPage: items });
 
+  const changePageNumber = (page: number) =>
+    setCompanyData({ ...companyData, pageNumber: page });
+
   const [refetchDataSignal, setRefetchDataSignal] = useState<{
     refetchData: {};
   }>({ refetchData: {} });
@@ -197,6 +200,9 @@ const CompaniesPage = () => {
               <Pagination
                 changeItemsPerPage={changeItemsPerPage}
                 itemsPerPage={companyData.itemsPerPage}
+                page={companyData.pageNumber}
+                maxPageNumber={companyData.totalPages}
+                changePageNumber={changePageNumber}
               />
             </TableAndPaginationHolder>
           </>
