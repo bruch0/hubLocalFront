@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Modal, { ModalProvider, BaseModalBackground } from "styled-react-modal";
 
-import { GenericModal } from "@Core/Modal";
+import { type GenericModal } from "@Core/Modal";
 
 export class ReactModal implements GenericModal {
   modal = ({
@@ -62,7 +62,9 @@ export class ReactModal implements GenericModal {
                 viewBox="0 0 24 24"
                 fill="none"
                 cursor="pointer"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                }}
               >
                 <path
                   d="M2.66659 23.6666L0.333252 21.3333L9.66659 12L0.333252 2.66665L2.66659 0.333313L11.9999 9.66665L21.3333 0.333313L23.6666 2.66665L14.3333 12L23.6666 21.3333L21.3333 23.6666L11.9999 14.3333L2.66659 23.6666Z"
@@ -73,7 +75,13 @@ export class ReactModal implements GenericModal {
             <ModalContentContainer>{modalContent}</ModalContentContainer>
           </ModalContainer>
         </StyledModal>
-        <div onClick={() => setIsOpen(true)}>{openButton}</div>
+        <div
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          {openButton}
+        </div>
       </>
     );
   };

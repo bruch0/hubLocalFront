@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 export class GenericUserFeedback {
   error: (message: string) => void;

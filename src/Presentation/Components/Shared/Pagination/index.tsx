@@ -29,7 +29,9 @@ const ItemsPerPage = ({
 }: ItemsPerPageProps) => {
   const [openOptions, setOpenOptions] = useState<boolean>(false);
 
-  const toogleOpenOptions = () => setOpenOptions(!openOptions);
+  const toogleOpenOptions = () => {
+    setOpenOptions(!openOptions);
+  };
 
   const paginationOptions = [
     {
@@ -121,13 +123,17 @@ const ItemsPerPage = ({
         </ItemsPerPageHolder>
         <ChangePageButton
           disabled={page - 1 === 0}
-          onClick={() => changePageNumber(page - 1)}
+          onClick={() => {
+            changePageNumber(page - 1);
+          }}
         >
           Anterior
         </ChangePageButton>
         <ChangePageButton
           disabled={page + 1 > maxPageNumber}
-          onClick={() => changePageNumber(page + 1)}
+          onClick={() => {
+            changePageNumber(page + 1);
+          }}
         >
           Próxima
         </ChangePageButton>

@@ -10,7 +10,7 @@ import { ReactToastifyUserFeedback } from "@Frameworks/Feedback/react-toastfy";
 
 import FormBuilder from "@Components/FormBuilder";
 
-import { Company } from "@Interfaces";
+import { type Company } from "@Interfaces";
 
 import { TableHolder, ActionsHolder } from "./styles";
 import { deleteCompany, updateCompany } from "@Service/api";
@@ -69,7 +69,6 @@ const CompaniesTable = ({
     columnHelper.accessor((row) => row, {
       id: "actions",
       cell: (info) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [companyModal, setCompanyModal] = useState<
           "update" | "delete" | ""
         >("");
@@ -78,8 +77,9 @@ const CompaniesTable = ({
           <ActionsHolder>
             {modalManager.modal({
               isOpen: companyModal === "update",
-              setIsOpen: (value: boolean) =>
-                setCompanyModal(value ? "update" : ""),
+              setIsOpen: (value: boolean) => {
+                setCompanyModal(value ? "update" : "");
+              },
               modalTitle: `Editar: ${info.row.original.name}`,
               modalContent: (
                 <FormBuilder
@@ -132,11 +132,12 @@ const CompaniesTable = ({
                       name: string;
                       siteUrl: string;
                       taxId: string;
-                    }) =>
+                    }) => {
                       updateCompanySubmitForm({
                         ...data,
                         id: info.row.original.id,
-                      }),
+                      });
+                    },
                     modalBottom: true,
                   }}
                 />
@@ -177,8 +178,9 @@ const CompaniesTable = ({
             </Link>
             {modalManager.modal({
               isOpen: companyModal === "delete",
-              setIsOpen: (value: boolean) =>
-                setCompanyModal(value ? "delete" : ""),
+              setIsOpen: (value: boolean) => {
+                setCompanyModal(value ? "delete" : "");
+              },
               modalTitle: "Confirmação de exclusão",
               modalContent: (
                 <FormBuilder
@@ -192,8 +194,9 @@ const CompaniesTable = ({
                       fontSize: "100%",
                       red: true,
                     },
-                    onSubmit: () =>
-                      deleteCompanySubmitForm({ id: info.row.original.id }),
+                    onSubmit: () => {
+                      deleteCompanySubmitForm({ id: info.row.original.id });
+                    },
                     modalBottom: true,
                   }}
                 />

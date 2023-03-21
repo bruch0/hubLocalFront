@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import { GenericApiConnection } from "@Core/Api";
+import { type GenericApiConnection } from "@Core/Api";
 
 export class AxiosApiConnection implements GenericApiConnection {
   get = async (url: string, token?: string) => {
     const response = await axios.get(url, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token ?? ""}` },
     });
 
     return { data: { statusCode: response.status, content: response.data } };
@@ -13,7 +13,7 @@ export class AxiosApiConnection implements GenericApiConnection {
 
   post = async (url: string, data: any, token?: string) => {
     const response = await axios.post(url, data, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token ?? ""}` },
     });
 
     return { data: { statusCode: response.status, content: response.data } };
@@ -21,7 +21,7 @@ export class AxiosApiConnection implements GenericApiConnection {
 
   put = async (url: string, data: any, token?: string) => {
     const response = await axios.put(url, data, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token ?? ""}` },
     });
 
     return { data: { statusCode: response.status, content: response.data } };
@@ -29,7 +29,7 @@ export class AxiosApiConnection implements GenericApiConnection {
 
   delete = async (url: string, token?: string) => {
     const response = await axios.delete(url, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token ?? ""}` },
     });
 
     return { data: { statusCode: response.status, content: response.data } };

@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { type ReactElement } from "react";
 
 export class GenericModal {
   modal: ({
@@ -16,5 +16,6 @@ export class GenericModal {
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   }) => ReactElement;
+
   provider?: (children?: React.ReactElement) => ReactElement;
 }

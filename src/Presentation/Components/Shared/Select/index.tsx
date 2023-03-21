@@ -39,7 +39,11 @@ const SelectHolder = ({
           onMouseEnter={removeEventListener}
           onMouseLeave={addEventListener}
         >
-          <ScrollableHolder onClick={() => setOpen(false)}>
+          <ScrollableHolder
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
             {children}
           </ScrollableHolder>
         </RelativeHolder>

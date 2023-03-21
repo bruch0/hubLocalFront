@@ -36,7 +36,7 @@ interface FormData {
     fontSize: string;
     red?: boolean;
   };
-  onSubmit: Function;
+  onSubmit: (data: any) => void;
   modalBottom?: boolean;
 }
 
@@ -61,7 +61,7 @@ export default function App({ formData }: { formData: FormData }) {
       <InputContainer modal={!!modalBottom}>
         {inputs.length > 0
           ? inputs.map((userInput) => (
-              <InputHolder nested={userInput.nested}>
+              <InputHolder nested={userInput.nested} key={userInput.name}>
                 <Label htmlFor={userInput.name}>{userInput.label}</Label>
                 {userInput.mask ? (
                   <Controller
@@ -72,14 +72,13 @@ export default function App({ formData }: { formData: FormData }) {
                       pattern: userInput.pattern,
                     }}
                     render={({ field }) => {
-                      // eslint-disable-next-line react-hooks/rules-of-hooks
                       useEffect(() => {
                         setValue(userInput.name, userInput.defaultValue);
                       }, []);
 
                       return (
                         <MaskedInput
-                          mask={userInput.mask || ""}
+                          mask={userInput.mask ?? ""}
                           {...field}
                           ref={null}
                           defaultValue={userInput.defaultValue}

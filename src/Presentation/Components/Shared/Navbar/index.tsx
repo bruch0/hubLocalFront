@@ -106,7 +106,10 @@ const Navbar = () => {
         <>
           {userContext.userCompanies.map((company) => (
             <SelectOption
-              onClick={() => navigate(`/companies/${company.id}`)}
+              key={company.id}
+              onClick={() => {
+                navigate(`/companies/${company.id}`);
+              }}
               height="80px"
             >
               <CompanyDropdown dropdownAvailable={true} forceHeight={true}>
@@ -130,7 +133,9 @@ const Navbar = () => {
       </SelectHolder>
 
       <UserDropdown
-        onClick={() => setUserDropdown(!userDropdown)}
+        onClick={() => {
+          setUserDropdown(!userDropdown);
+        }}
         onMouseLeave={addUserDropdownEventListener}
         onMouseEnter={removeUserDropdownEventListener}
       >

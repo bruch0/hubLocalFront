@@ -10,7 +10,7 @@ import Pagination from "@Components/Shared/Pagination";
 import FormBuilder from "@Components/FormBuilder";
 import LocalsTable from "@Components/LocalsTable";
 
-import { Local } from "@Interfaces";
+import { type Local } from "@Interfaces";
 
 import UserContext from "@Contexts/User";
 
@@ -38,14 +38,16 @@ const LocalsPage = () => {
   }>({ locals: [], itemsPerPage: 10, pageNumber: 1, totalPages: 1 });
   const [createLocalModal, setCreateLocalModal] = useState<boolean>(false);
 
-  const changeItemsPerPage = (items: number) =>
+  const changeItemsPerPage = (items: number) => {
     setLocalData({ ...localData, itemsPerPage: items });
+  };
 
-  const changePageNumber = (page: number) =>
+  const changePageNumber = (page: number) => {
     setLocalData({ ...localData, pageNumber: page });
+  };
 
   const [refetchDataSignal, setRefetchDataSignal] = useState<{
-    refetchData: {};
+    refetchData: unknown;
   }>({ refetchData: {} });
 
   useEffect(() => {

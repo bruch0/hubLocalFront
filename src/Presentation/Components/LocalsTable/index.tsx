@@ -10,7 +10,7 @@ import { ReactToastifyUserFeedback } from "@Frameworks/Feedback/react-toastfy";
 
 import FormBuilder from "@Components/FormBuilder";
 
-import { Local } from "@Interfaces";
+import { type Local } from "@Interfaces";
 
 import { deleteLocal, updateLocal } from "@Service/api";
 
@@ -68,7 +68,6 @@ const CompaniesTable = ({
     columnHelper.accessor((row) => row, {
       id: "actions",
       cell: (info) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
         const [localModal, setLocalModal] = useState<"update" | "delete" | "">(
           ""
         );
@@ -77,8 +76,9 @@ const CompaniesTable = ({
           <ActionsHolder>
             {modalManager.modal({
               isOpen: localModal === "update",
-              setIsOpen: (value: boolean) =>
-                setLocalModal(value ? "update" : ""),
+              setIsOpen: (value: boolean) => {
+                setLocalModal(value ? "update" : "");
+              },
               modalTitle: `Editar: ${info.row.original.name}`,
               modalContent: (
                 <FormBuilder
@@ -123,7 +123,7 @@ const CompaniesTable = ({
                         label: "Numero",
                         errorMessage: "Insira um número válido",
                         pattern: /^\d*/,
-                        defaultValue: `${info.row.original.number}`,
+                        defaultValue: `${info.row.original.number ?? ""}`,
                         required: false,
                         disabled: false,
                         nested: true,
@@ -177,11 +177,12 @@ const CompaniesTable = ({
                       neighborhood: string;
                       streetAddress: string;
                       number?: number;
-                    }) =>
+                    }) => {
                       updateLocalSubmitForm({
                         ...data,
                         id: info.row.original.id,
-                      }),
+                      });
+                    },
                     modalBottom: true,
                   }}
                 />
@@ -207,8 +208,9 @@ const CompaniesTable = ({
 
             {modalManager.modal({
               isOpen: localModal === "delete",
-              setIsOpen: (value: boolean) =>
-                setLocalModal(value ? "delete" : ""),
+              setIsOpen: (value: boolean) => {
+                setLocalModal(value ? "delete" : "");
+              },
               modalTitle: "Confirmação de exclusão",
               modalContent: (
                 <FormBuilder
@@ -222,8 +224,9 @@ const CompaniesTable = ({
                       fontSize: "100%",
                       red: true,
                     },
-                    onSubmit: () =>
-                      deleteLocalSubmitForm({ id: info.row.original.id }),
+                    onSubmit: () => {
+                      deleteLocalSubmitForm({ id: info.row.original.id });
+                    },
                     modalBottom: true,
                   }}
                 />

@@ -6,14 +6,14 @@ const cookieManager = new JsCookieManager();
 
 const name = cookieManager.getCookie("name");
 const token = cookieManager.getCookie("token");
-const userCompanies: { id: number; name: string }[] = JSON.parse(
-  cookieManager.getCookie("userCompanies") || ""
+const userCompanies: Array<{ id: number; name: string }> = JSON.parse(
+  cookieManager.getCookie("userCompanies") ?? ""
 );
 
 const UserContext = createContext({
   email: "",
-  name: name || "",
-  token: token || "",
+  name: name ?? "",
+  token: token ?? "",
   userCompanies: userCompanies || [],
 });
 

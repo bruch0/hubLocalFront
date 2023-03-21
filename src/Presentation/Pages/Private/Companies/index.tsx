@@ -11,7 +11,7 @@ import Pagination from "@Components/Shared/Pagination";
 import FormBuilder from "@Components/FormBuilder";
 import CompaniesTable from "@Components/CompaniesTable";
 
-import { Company } from "@Interfaces";
+import { type Company } from "@Interfaces";
 
 import UserContext from "@Contexts/User";
 
@@ -38,14 +38,16 @@ const CompaniesPage = () => {
   }>({ companies: [], itemsPerPage: 10, pageNumber: 1, totalPages: 1 });
   const [createCompanyModal, setCreateCompanyModal] = useState<boolean>(false);
 
-  const changeItemsPerPage = (items: number) =>
+  const changeItemsPerPage = (items: number) => {
     setCompanyData({ ...companyData, itemsPerPage: items });
+  };
 
-  const changePageNumber = (page: number) =>
+  const changePageNumber = (page: number) => {
     setCompanyData({ ...companyData, pageNumber: page });
+  };
 
   const [refetchDataSignal, setRefetchDataSignal] = useState<{
-    refetchData: {};
+    refetchData: unknown;
   }>({ refetchData: {} });
 
   useEffect(() => {
@@ -159,7 +161,9 @@ const CompaniesPage = () => {
                       name: string;
                       siteUrl: string;
                       taxId: string;
-                    }) => createCompanySubmitForm(data),
+                    }) => {
+                      createCompanySubmitForm(data);
+                    },
                     modalBottom: true,
                   }}
                 />
