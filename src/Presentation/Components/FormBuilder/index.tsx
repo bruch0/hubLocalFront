@@ -26,6 +26,7 @@ interface FormData {
     nested: boolean;
     validatePassword?: boolean;
     mask?: string;
+    valueAsNumber?: string;
   }>;
   message?: string;
   submitButton: {
@@ -75,7 +76,7 @@ export default function App({ formData }: { formData: FormData }) {
 
                       return (
                         <MaskedInput
-                          mask="99.999.999/9999-99"
+                          mask={userInput.mask || ""}
                           {...field}
                           ref={null}
                           defaultValue={userInput.defaultValue}

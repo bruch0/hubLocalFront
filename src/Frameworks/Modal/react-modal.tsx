@@ -92,7 +92,7 @@ const StyledModal = styled(Modal)`
 
 const ModalContainer = styled.div`
   width: 50vw;
-  height: 50vh;
+  height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
