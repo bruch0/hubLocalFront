@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 import faker from "faker";
 
-describe("Login Page", () => {
+describe("Register Page", () => {
   it("Should render all the fields properly", () => {
     cy.visit("http://localhost:3000/register");
 
