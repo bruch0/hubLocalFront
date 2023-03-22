@@ -120,7 +120,7 @@ const CompaniesTable = ({
                       },
                       {
                         name: "number",
-                        label: "Numero",
+                        label: "Número",
                         errorMessage: "Insira um número válido",
                         pattern: /^\d*/,
                         defaultValue: `${info.row.original.number ?? ""}`,

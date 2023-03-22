@@ -117,7 +117,7 @@ const LocalsPage = () => {
     },
     {
       name: "number",
-      label: "Numero",
+      label: "Número",
       errorMessage: "Insira um número válido",
       pattern: /^(0|[1-9]\d*)(\.\d+)?$/,
       required: false,
