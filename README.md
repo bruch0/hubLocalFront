@@ -12,6 +12,10 @@ ReactJS, StyledComponents, Axios, ContextAPI, React-Hook-Forms para gerenciament
 
 ## Como rodar na sua máquina
 
+### Deve ter o backend rodando
+
+Acesse [aqui](https://github.com/bruch0/hubLocalBack)
+
 ### Clone o repositório
 
 ```bash
@@ -34,6 +38,12 @@ code .
 
 ```bash
 npm i
+```
+
+### Altere a porta que o backend está rodando no .env
+
+```bash
+VITE_BACKEND_PORT=
 ```
 
 ### Use a linha de comando para rodar os scripts
