@@ -2,7 +2,9 @@ import { AxiosApiConnection } from "@Frameworks/Api/axios";
 
 const axiosApiConnection = new AxiosApiConnection();
 const baseURL =
-  process.env.NODE_ENV === "production" ? "" : "http://localhost:4000";
+  process.env.NODE_ENV === "production"
+    ? ""
+    : `http://localhost:${import.meta.env.VITE_BACKEND_PORT}`;
 
 const createAccount = (data: {
   name: string;
