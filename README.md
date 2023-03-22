@@ -41,4 +41,5 @@ npm i
 ```bash
 npm run start -> Inicia o app
 npm run lint -> Linta o app
+npm run lint -> Abre o Cypress, ali é possível acessar os testes E2E (É NECESSÁRIO ESTAR RODANDO O FRONT E O BACK LOCALMENTE PARA ISSO)
 ```

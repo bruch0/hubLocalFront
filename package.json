@@ -25,7 +25,7 @@
   "scripts": {
     "start": "vite --config vite.config.ts",
     "build": "vite build",
-    "test": "react-scripts test",
+    "test": "npx cypress open",
     "lint": "npx eslint \"src/**/**.{ts,tsx}\" --max-warnings=0"
   },
   "eslintConfig": {
